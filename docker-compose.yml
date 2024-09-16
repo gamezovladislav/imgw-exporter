@@ -5,7 +5,7 @@ services:
     image: pompushko/imgw-exporter:latest
     container_name: imgw-exporter
     environment:
-      - STATION_ID=151160170,151170030,151160190,150170040,151170050
+      - STATION_ID=151160170,151170030,151160190,150170040
     ports:
       - "9634:8000"
     restart: always
