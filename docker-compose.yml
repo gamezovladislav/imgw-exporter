@@ -38,8 +38,5 @@ services:
     networks:
       - grafnet
 
-volumes:
-  grafana-data:
-
 networks:
   grafnet:

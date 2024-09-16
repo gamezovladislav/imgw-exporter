@@ -25,8 +25,8 @@ jobs:
     steps:
       - name: Stop docker and remove old container
         run: |
-          docker stop imgw-exporter prometheus grafana || true
-          docker rm imgw-exporter prometheus grafana || true
+          docker stop imgw-exporter || true
+          docker rm imgw-exporter || true
 
       - name: Start docker with updated instance
         run: |
