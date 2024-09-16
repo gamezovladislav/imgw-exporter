@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  imgw-exporter:
+    image: pompushko/imgw-exporter:latest
+    container_name: imgw-exporter
+    environment:
+      - STATION_ID=151160170,151170030,151160190,150170040
+    ports:
+      - "9634:8000"
+    restart: always
+    networks:
+      - grafnet
+    deploy:
+      mode: global
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"  # Порт для доступа к Grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin  # Имя пользователя администратора
+      - GF_SECURITY_ADMIN_PASSWORD=admin  # Пароль администратора
+    volumes:
+      - grafana-data:/var/lib/grafana  # Хранение данных Grafana вне контейнера
+    depends_on:
+      - prometheus  # Указывает, что Grafana запускается после Prometheus
+    networks:
+      - grafnet
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"  # Порт для доступа к Prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml  # Подключение конфигурационного файла Prometheus
+    networks:
+      - grafnet
+
+volumes:
+  grafana-data:
+
+networks:
+  grafnet:
